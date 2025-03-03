@@ -31,14 +31,21 @@ Interpreter type: CUSTOM ENVIRONMENT
 git clone git@github.com:mipfikus/tgbot.git
 ```
 
-<p>5. Установить пакет aiogram:</p>
+<p>5. Обновить pip и установить пакеты (по очереди написать эти команды в консоль):</p>
 
 ```
+pip install --upgrade pip
 pip install aiogram
+pip install python-dotenv
 ```
 
-<p>6. Чтоб запустить бота ввести в консоль:</p>
+<p>6. Чтоб запустить бота ввести в консоль... (или запустить main.py через pycharm для этого нажать треугольничек в верхнем правом углу):</p>
 
 ```
 python3 main.py
+```
+<p>7. Бот доступен по ссылке</p>
+
+```
+https://t.me/mkimtest_bot
 ```
