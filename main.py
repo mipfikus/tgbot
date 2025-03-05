@@ -1,3 +1,5 @@
+# version 0.1.0
+
 import asyncio
 import logging
 import sys
