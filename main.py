@@ -1,5 +1,5 @@
 # version 0.1.0
-# ПАША БЕССОНОВ
+# ПАША БЕССОНОВ, АЛИНА
 import asyncio
 import logging
 import sys
