@@ -1,0 +1,16 @@
+[08-04-2025 19:47:46] INFO | aiogram.dispatcher: Start polling
+[08-04-2025 19:47:46] INFO | aiogram.dispatcher: Run polling for bot @mkimtest_bot id=7771611856 - 'kim_testbot'
+[08-04-2025 19:47:47] INFO | root: user 1581803700 leaves unhandled message
+[08-04-2025 19:47:47] INFO | aiogram.event: Update id=830587369 is handled. Duration 422 ms by bot id=7771611856
+[08-04-2025 19:47:59] INFO | root: user 1581803700 starts bot 
+[08-04-2025 19:47:59] INFO | aiogram.event: Update id=830587370 is handled. Duration 127 ms by bot id=7771611856
+[08-04-2025 19:48:03] INFO | root: user 1581803700 gets help 
+[08-04-2025 19:48:03] INFO | aiogram.event: Update id=830587371 is handled. Duration 150 ms by bot id=7771611856
+[08-04-2025 19:48:07] INFO | root: user 1581803700 gets status 
+[08-04-2025 19:48:07] INFO | aiogram.event: Update id=830587372 is handled. Duration 149 ms by bot id=7771611856
+[08-04-2025 19:48:11] INFO | root: user 1581803700 gets random 
+[08-04-2025 19:48:11] INFO | aiogram.event: Update id=830587373 is handled. Duration 186 ms by bot id=7771611856
+[08-04-2025 19:48:13] INFO | root: user 1581803700 gets random value 
+[08-04-2025 19:48:13] INFO | aiogram.event: Update id=830587374 is handled. Duration 377 ms by bot id=7771611856
+[08-04-2025 19:48:28] INFO | aiogram.dispatcher: Polling stopped
+[08-04-2025 19:48:28] INFO | aiogram.dispatcher: Polling stopped for bot @mkimtest_bot id=7771611856 - 'kim_testbot'
