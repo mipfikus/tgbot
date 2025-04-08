@@ -6,6 +6,7 @@ from config import TOKEN
 from aiogram import Bot, Dispatcher
 from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
+from utils import setup_logger
 
 from handlers import handlers
 from handlers import callbacks
@@ -20,8 +21,12 @@ async def main() -> None:
     dp.include_router(callbacks.router)
     dp.startup.register(set_commands)
 
+
+    # запуск логирования
+    setup_logger(fname=__name__)
+
     await dp.start_polling(bot)
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, stream=sys.stdout)
+    #logging.basicConfig(level=logging.INFO, stream=sys.stdout)
     asyncio.run(main())
