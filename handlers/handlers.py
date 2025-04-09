@@ -30,7 +30,7 @@ async def command_help_handler(message: Message) -> None:
 
 Разработчики: @yk_rf228, @pashkabesik
     """
-    await message.answer(help_text)
+    await message.answer(text=help_text)
     logging.info(f"user {message.from_user.id} gets help ")
 
 @router.message(Command("random"))  # /random - команда в которой используется кнопка под сообщением
