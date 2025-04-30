@@ -2,7 +2,7 @@ from aiogram.types import InlineKeyboardMarkup
 
 import pytest
 from fixtures import mock_message, mock_router
-from tgbot.handlers.handlers import command_random_handler
+from handlers.handlers import command_random_handler
 
 @pytest.mark.asyncio
 async def test_command_random_handler(mock_router, mock_message):
@@ -14,7 +14,8 @@ async def test_command_random_handler(mock_router, mock_message):
 
 
     called_args, called_kwargs = mock_message.answer.call_args
+
     assert called_args[0] == "Нажмите на кнопку, чтобы бот отправил кое-что"
 
-    # markup = called_kwargs['reply_markup']
-    # assert isinstance(markup, InlineKeyboardMarkup), "reply_markup не является"
+    markup = called_kwargs['reply_markup']
+    assert isinstance(markup, InlineKeyboardMarkup), 'reply_markup не является Inline-клавиатурой'
