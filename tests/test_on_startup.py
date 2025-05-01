@@ -1,11 +1,7 @@
-test_on_startup.py
-
-
 import os
 from pathlib import Path
 from dotenv import load_dotenv
 
-# TODO костыль
 parent = Path(f"{os.getcwd()}").parent
 
 def test_logs_folder_exists():
@@ -24,4 +20,3 @@ def test_env_variable_loaded():
     load_dotenv()
     bot_token = os.getenv("TOKEN")
     assert bot_token, "TOKEN не найден в переменных окружения"
-
