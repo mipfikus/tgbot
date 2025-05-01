@@ -1,7 +1,7 @@
 import pytest
-from unittest.mock import AsyncMock, MagicMock
+from unittest.mock import AsyncMock, MagicMock, Mock, patch
 from aiogram.types import Message, CallbackQuery
-from aiogram import Router
+from aiogram import Router, Bot
 
 @pytest.fixture
 def mock_message():
@@ -31,3 +31,35 @@ def mock_router():
     """Mock роутер"""
     router = Router()
     return router
+
+@pytest.fixture
+def mock_bot():
+    mock = AsyncMock(spec=Bot)
+    return mock
+
+@pytest.fixture
+def mock_dispatcher():
+    mock = Mock()
+    mock.include_router = Mock()
+    mock.startup = Mock()
+    mock.startup.register = Mock()
+    mock.start_polling = AsyncMock()
+    return mock
+
+@pytest.fixture
+def mock_handler_router():
+    return Mock()
+
+@pytest.fixture
+def mock_callback_router():
+    return Mock()
+
+@pytest.fixture
+def mock_set_commands():
+    with patch("main.set_commands", new_callable=AsyncMock) as mock:
+        yield mock
+
+@pytest.fixture
+def mock_logger():
+    with patch("main.setup_logger") as mock:
+        yield mock

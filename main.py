@@ -12,10 +12,10 @@ from handlers import handlers
 from handlers import callbacks
 from handlers.bot_commands import set_commands
 
-dp = Dispatcher()
-
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    
+    dp = Dispatcher()
 
     dp.include_router(handlers.router)
     dp.include_router(callbacks.router)
