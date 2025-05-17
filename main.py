@@ -12,10 +12,12 @@ from handlers import handlers
 from handlers import callbacks
 from handlers.bot_commands import set_commands
 
-dp = Dispatcher()
+from db import async_create_table
 
 async def main() -> None:
     bot = Bot(token=TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
+    
+    dp = Dispatcher()
 
     dp.include_router(handlers.router)
     dp.include_router(callbacks.router)
@@ -29,4 +31,8 @@ async def main() -> None:
 
 if __name__ == "__main__":
     #logging.basicConfig(level=logging.INFO, stream=sys.stdout)
-    asyncio.run(main())
+    try:
+        asyncio.run(async_create_table())
+        asyncio.run(main())
+    except (KeyboardInterrupt, SystemExit):
+        logging.info("End Script")
