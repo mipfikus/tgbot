@@ -1,16 +1,49 @@
-from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
-from aiogram import types
 
-def get_random_keyboard() -> types.InlineKeyboardMarkup:
-    builder = InlineKeyboardBuilder()
-    builder.add(types.InlineKeyboardButton(
-        text="Нажми меня",
-        callback_data="random_value")
+def get_material_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="Кирпич", callback_data="material_кирпич")],
+            [InlineKeyboardButton(text="Бетон", callback_data="material_бетон")],
+            [InlineKeyboardButton(text="Железобетон", callback_data="material_железобетон")]
+        ]
     )
-    return builder.as_markup()
 
-button_tutor = InlineKeyboardButton(text="Преподаватель", callback_data="button_tutor")
-button_student = InlineKeyboardButton(text="Слушатель", callback_data="button_student")
+def get_back_keyboard(target: str) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🔙 Назад", callback_data=f"back_to_{target}")]
+        ]
+    )
 
-keyboard_start = InlineKeyboardMarkup(inline_keyboard=[[button_tutor, button_student]])
+def get_clear_edit_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🗑 Очистить", callback_data="clear_orders")],
+            [InlineKeyboardButton(text="✏️ Редактировать", callback_data="edit_orders")]
+        ]
+    )
+
+def get_clear_keyboard() -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="🗑 Очистить", callback_data="clear_orders")]
+        ]
+    )
+
+def get_edit_select_keyboard(order_ids: list) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text=f"Подбор {oid}", callback_data=f"edit_{oid}")]
+            for oid in order_ids
+        ]
+    )
+
+def get_edit_fields_keyboard(order_id: int) -> InlineKeyboardMarkup:
+    return InlineKeyboardMarkup(
+        inline_keyboard=[
+            [InlineKeyboardButton(text="Изменить диаметр", callback_data=f"update_{order_id}_diameter")],
+            [InlineKeyboardButton(text="Изменить глубину", callback_data=f"update_{order_id}_depth")],
+            [InlineKeyboardButton(text="Изменить количество", callback_data=f"update_{order_id}_quantity")]
+        ]
+    )
