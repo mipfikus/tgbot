@@ -1,33 +1,44 @@
-from aiogram import types, Router, F
-import logging
+from aiogram import Router, F
 from aiogram.types import CallbackQuery
-from sqlalchemy import insert
-from db import async_session, User
-import string
-from random import choices
+from handlers.services import order_handler as handler
+from handlers.keyboards import get_edit_select_keyboard, get_edit_fields_keyboard
+from aiogram.fsm.context import FSMContext
+from handlers.states import EditFSM
 
 router = Router()
 
-@router.callback_query(F.data == "random_value")
-async def send_random_value(callback: types.CallbackQuery):
-    await callback.message.answer('кое-что')
-    logging.info(f"user {callback.from_user.id} gets random value ")
+@router.callback_query(F.data == "clear_orders")
+async def clear_orders(callback: CallbackQuery):
+    handler.orders.remove_all()
+    await callback.message.answer("🗑 Заказы очищены.")
+    await callback.answer()
 
-@router.callback_query(F.data == "button_tutor")
-async def callback_start_tutor(callback: CallbackQuery):
-    async with async_session() as session:
-        chars = string.ascii_letters + string.digits + string.punctuation
-        new_user = {
-            "user_id": callback.from_user.id,
-            "username": callback.from_user.username,
-            "tutorcode": "".join(choices(chars, k=6))
-        }
-        insert_query = insert(User).values(new_user)
-        await session.execute(insert_query)
-        await session.commit()
-        await callback.message.answer("Пользователь добавлен!")
-        logging.info(f"Пользователь {callback.from_user.username} добавлен в базу данных с ролью преподаватель!")
+@router.callback_query(F.data == "edit_orders")
+async def edit_orders_menu(callback: CallbackQuery):
+    order_ids = list(handler.orders.get_items().keys())
+    if not order_ids:
+        await callback.message.answer("❗Нет заказов для редактирования.")
+        await callback.answer()
+        return
+    await callback.message.answer(
+        "Выберите подбор для редактирования:",
+        reply_markup=get_edit_select_keyboard(order_ids)
+    )
+    await callback.answer()
 
-@router.callback_query(F.data == "button_student")
-async def callback_insert_tutorcode(callback: CallbackQuery):
-    await callback.message.answer("Введите код преподавателя (в формате tutorcode-CODE):")
+@router.callback_query(F.data.startswith("edit_"))
+async def edit_order(callback: CallbackQuery):
+    item_id = int(callback.data.split("_")[1])
+    await callback.message.answer(
+        f"Что вы хотите изменить в Подборе {item_id}?",
+        reply_markup=get_edit_fields_keyboard(item_id)
+    )
+    await callback.answer()
+
+@router.callback_query(F.data.startswith("update_"))
+async def update_field(callback: CallbackQuery, state: FSMContext):
+    _, item_id, field = callback.data.split("_")
+    await state.update_data(item_id=int(item_id), field=field)
+    await callback.message.answer(f"Введите новое значение для {field}:")
+    await state.set_state(EditFSM.waiting_for_new_value)
+    await callback.answer()
